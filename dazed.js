@@ -13,7 +13,7 @@ var entity;
 //////////////////
 var polygons = [];
 var polySide = 5;
-var polygonWait = 100;
+var polygonWait = 50;
 var polygonWaitCount = 0;
 var lineWidthJumpWait = 50;
 var lineWidthJumpCount = 0;
@@ -54,8 +54,8 @@ function keyRelease(e) {
 
 function entityPar() {
 	this.a = windowA + (360/polySide)/2; 
-	this.x = windowCX + ((canvas.width<canvas.height)?canvas.width/5:canvas.height/5)*Math.cos(this.a*Math.PI/180);
-	this.y = windowCY + ((canvas.width<canvas.height)?canvas.width/5:canvas.height/5)*Math.sin(this.a*Math.PI/180);
+	this.x = windowCX + ((canvas.width<canvas.height)?canvas.width/3:canvas.height/3)*Math.cos(this.a*Math.PI/180);
+	this.y = windowCY + ((canvas.width<canvas.height)?canvas.width/3:canvas.height/3)*Math.sin(this.a*Math.PI/180);
 	this.r = (windowWidth < windowHeight)?windowWidth*0.01:windowHeight*0.01;
 	this.c = "rgba(0,0,0,1)";
 }
@@ -127,8 +127,8 @@ function entityUpdate() {
 		pressedKey = -1;
 	}
 
-	entity.x = windowCX + ((canvas.width<canvas.height)?canvas.width/5:canvas.height/5)*Math.cos(entity.a*Math.PI/180);
-	entity.y = windowCY + ((canvas.width<canvas.height)?canvas.width/5:canvas.height/5)*Math.sin(entity.a*Math.PI/180);
+	entity.x = windowCX + ((canvas.width<canvas.height)?canvas.width/3:canvas.height/3)*Math.cos(entity.a*Math.PI/180);
+	entity.y = windowCY + ((canvas.width<canvas.height)?canvas.width/3:canvas.height/3)*Math.sin(entity.a*Math.PI/180);
 }
 
 function backgroundGen() {
@@ -184,8 +184,8 @@ function gameframe() {
 		polygonWaitCount = 0;
 		polygonSpawn();
 	}
-	windowA += 1;
-	entity.a++;
+	windowA += 2;
+	entity.a += 2;
 	entityUpdate();
 	backgroundGen();
 	polygonRender();
