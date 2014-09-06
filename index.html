@@ -31,8 +31,8 @@ var ctx = canvas.getContext("2d");
 
 var windowWidth = window.innerWidth;
 var windowHeight = window.innerHeight;
-canvas.width = windowWidth * 0.99;
-canvas.height = windowHeight * 0.99;
+canvas.width = windowWidth * 1.99;
+canvas.height = windowHeight * 1.99;
 var windowCX = canvas.width/2;
 var windowCY = canvas.height/2;
 var windowA = 0;
@@ -150,7 +150,7 @@ function backgroundGen() {
 function gameframe() {
 	//ctx.clearRect(0,0,canvas.width,canvas.height);
 	backgroundGen();
-	windowA += 0.1;
+	windowA += 0.5;
 }
 
 setInterval(gameframe,17);
