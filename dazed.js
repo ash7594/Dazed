@@ -12,7 +12,7 @@ var windowA = 0;
 var entity;
 //////////////////
 var polygons = [];
-var polySide = 3;
+var polySide = 10000;
 var polygonWait = 100;
 var polygonWaitCount = 0;
 var lineWidthJumpWait = 50;
@@ -114,14 +114,14 @@ function backgroundGen() {
 		i--;
 		if(colorShift4 == false) {
 			if(colorShift3 == false)
-				ctx.fillStyle = "#"+colorCode2[colorShift1]+colorCode[i]+colorCode2[colorShift2];
+				ctx.fillStyle = "#"+colorCode2[colorShift1]+colorCode[i%6]+colorCode2[colorShift2];
 			else if(colorShift3 == true)
-				ctx.fillStyle = "#"+colorCode2[colorShift1]+colorCode[i]+colorCode2[colorCode2.length-1-colorShift2];
+				ctx.fillStyle = "#"+colorCode2[colorShift1]+colorCode[i%6]+colorCode2[colorCode2.length-1-colorShift2];
 		} else if(colorShift4 == true) {
 			if(colorShift3 == false)
-				ctx.fillStyle = "#"+colorCode2[colorCode2.length-1-colorShift1]+colorCode[i]+colorCode2[colorShift2];
+				ctx.fillStyle = "#"+colorCode2[colorCode2.length-1-colorShift1]+colorCode[i%6]+colorCode2[colorShift2];
 			else if(colorShift3 == true)
-				ctx.fillStyle = "#"+colorCode2[colorCode2.length-1-colorShift1]+colorCode[i]+colorCode2[colorCode2.length-1-colorShift2];
+				ctx.fillStyle = "#"+colorCode2[colorCode2.length-1-colorShift1]+colorCode[i%6]+colorCode2[colorCode2.length-1-colorShift2];
 		} 
 		ctx.fill();
 		ctx.closePath();
