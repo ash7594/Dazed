@@ -46,7 +46,11 @@ var polySide = 6;
 //////////////////
 var backRad = 100;
 var colors = ["red","blue","yellow","green","grey","purple"];
-var colors2 = ["rgba(20,0,0,1)","rgba(20,0,0,1)","rgba(20,0,0,1)","rgba(20,0,0,1)","rgba(20,0,0,1)","rgba(20,0,0,1)"];
+var colors2 = ["rgba(40,0,0,1)","rgba(80,0,0,1)","rgba(120,0,0,1)","rgba(160,0,0,1)","rgba(200,0,0,1)","rgba(240,0,0,1)"];
+var colors3 = ["#FFFFFF","#FFCCFF","#FF99FF","#FF66FF","#FF33FF","#FF00FF"];
+var colorCode = ["FF","CC","99","66","33","00"];
+var colorShift2 = 0;
+var colorShift1 = 0;
 //////////////////
 
 
@@ -109,19 +113,27 @@ function backgroundGen() {
 		ctx.lineTo(windowCX+backRad*Math.cos(i*360/polySide*Math.PI/180),windowCY+backRad*Math.sin(i*360/polySide*Math.PI/180));
 		ctx.lineTo(windowCX,windowCY);
 		i--;
-		ctx.fillStyle = colors[i];
+		ctx.fillStyle = "#"+colorCode[colorShift1]+colorCode[i]+colorCode[colorShift2];
 		ctx.fill();
 		ctx.closePath();
 	}
+	colorShift2++;
+		if(colorShift2 == polySide) {
+			colorShift2 = 0;
+			colorShift1++;
+			if(colorShift1 == 6)
+				colorShift1 = 0; 
+		}
 }
 
 function gameframe() {
 	backgroundGen();
-
 }
 
+setInterval(gameframe,1000);
+
 entitySpawn();
-gameframe();
+//gameframe();
 
 </script>
 
