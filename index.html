@@ -5,16 +5,41 @@
 
 <style>
 
+*{
+	margin: 0px;
+	padding: 0px;
+}
 
+body{
+	background-color: black;
+}
+
+#canvas{
+	background-color: white;
+	border-radius: 10px;
+	border: 2px solid #333333;
+}
 
 </style>
 
 <body>
 
+<canvas id="canvas"></canvas>
 
 <script>
 
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
 
+var windowWidth = window.innerWidth;
+var windowHeight = window.innerHeight;
+
+canvas.width = windowWidth * 0.9;
+canvas.height = windowHeight * 0.9;
+
+canvas.style.position = "absolute";
+canvas.style.left = (windowWidth - canvas.width)/2;
+canvas.style.top = (windowHeight - canvas.height)/2;
 
 </script>
 
