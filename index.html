@@ -49,6 +49,7 @@ var colors = ["red","blue","yellow","green","grey","purple"];
 var colors2 = ["rgba(40,0,0,1)","rgba(80,0,0,1)","rgba(120,0,0,1)","rgba(160,0,0,1)","rgba(200,0,0,1)","rgba(240,0,0,1)"];
 var colors3 = ["#FFFFFF","#FFCCFF","#FF99FF","#FF66FF","#FF33FF","#FF00FF"];
 var colorCode = ["FF","CC","99","66","33","00"];
+var colorCode2 = ["FF","EE","DD","CC","BB","AA","99","88","77","66","55","44","33","22","11","00"];
 var colorShift2 = 0;
 var colorShift1 = 0;
 var colorShift3 = false;
@@ -115,14 +116,14 @@ function backgroundGen() {
 		ctx.lineTo(windowCX,windowCY);
 		i--;
 		if(colorShift3 == false)
-			ctx.fillStyle = "#"+colorCode[colorShift1]+colorCode[i]+colorCode[colorShift2];
+			ctx.fillStyle = "#"+colorCode[colorShift1]+colorCode[i]+colorCode2[colorShift2];
 		else if(colorShift3 == true)
-			ctx.fillStyle = "#"+colorCode[colorShift1]+colorCode[i]+colorCode[5-colorShift2];
+			ctx.fillStyle = "#"+colorCode[colorShift1]+colorCode[i]+colorCode2[colorCode2.length-1-colorShift2];
 		ctx.fill();
 		ctx.closePath();
 	}
 	colorShift2++;
-		if(colorShift2 == polySide) {
+		if(colorShift2 == colorCode2.length) {
 			colorShift2 = 0;
 			colorShift1++;
 			if(colorShift1 == 6) {
@@ -136,7 +137,7 @@ function gameframe() {
 	backgroundGen();
 }
 
-setInterval(gameframe,1000);
+setInterval(gameframe,100);
 
 entitySpawn();
 gameframe();
