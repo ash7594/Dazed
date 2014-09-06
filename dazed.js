@@ -12,7 +12,7 @@ var windowA = 0;
 var entity;
 //////////////////
 var polygons = [];
-var polySide = 6;
+var polySide = 3;
 var polygonWait = 100;
 var polygonWaitCount = 0;
 var lineWidthJumpWait = 50;
@@ -91,7 +91,7 @@ function polygonRender() {
 			ctx.closePath();
 		}
 		//polygons[i].lw -= 1;
-		if(polygons[i].r >= (backRad-10)) {
+		if(polygons[i].r >= (backRad-15)) {
 			polygonDestruct();
 			break;
 		}
@@ -156,7 +156,7 @@ function gameframe() {
 		polygonWaitCount = 0;
 		polygonSpawn();
 	}
-	windowA += 0.5;
+	windowA += 1;
 	backgroundGen();
 	polygonRender();
 }
