@@ -51,6 +51,7 @@ var colors3 = ["#FFFFFF","#FFCCFF","#FF99FF","#FF66FF","#FF33FF","#FF00FF"];
 var colorCode = ["FF","CC","99","66","33","00"];
 var colorShift2 = 0;
 var colorShift1 = 0;
+var colorShift3 = false;
 //////////////////
 
 
@@ -113,7 +114,10 @@ function backgroundGen() {
 		ctx.lineTo(windowCX+backRad*Math.cos(i*360/polySide*Math.PI/180),windowCY+backRad*Math.sin(i*360/polySide*Math.PI/180));
 		ctx.lineTo(windowCX,windowCY);
 		i--;
-		ctx.fillStyle = "#"+colorCode[colorShift1]+colorCode[i]+colorCode[colorShift2];
+		if(colorShift3 == false)
+			ctx.fillStyle = "#"+colorCode[colorShift1]+colorCode[i]+colorCode[colorShift2];
+		else if(colorShift3 == true)
+			ctx.fillStyle = "#"+colorCode[colorShift1]+colorCode[i]+colorCode[5-colorShift2];
 		ctx.fill();
 		ctx.closePath();
 	}
@@ -121,8 +125,10 @@ function backgroundGen() {
 		if(colorShift2 == polySide) {
 			colorShift2 = 0;
 			colorShift1++;
-			if(colorShift1 == 6)
-				colorShift1 = 0; 
+			if(colorShift1 == 6) {
+				colorShift1 = 0;
+			}
+			colorShift3 = !colorShift3;
 		}
 }
 
@@ -133,7 +139,7 @@ function gameframe() {
 setInterval(gameframe,1000);
 
 entitySpawn();
-//gameframe();
+gameframe();
 
 </script>
 
