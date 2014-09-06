@@ -33,11 +33,22 @@ var ctx = canvas.getContext("2d");
 
 var windowWidth = window.innerWidth;
 var windowHeight = window.innerHeight;
-
-var entity;
-
 canvas.width = windowWidth * 0.9;
 canvas.height = windowHeight * 0.9;
+var windowCX = canvas.width/2;
+var windowCY = canvas.height/2;
+var windowA = 0;
+//////////////////
+var entity;
+//////////////////
+var polygons = [];
+var polySide = 6;
+//////////////////
+var backRad = 100;
+var colors = ["red","blue","yellow","green","grey","purple"];
+var colors2 = ["rgba(20,0,0,1)","rgba(20,0,0,1)","rgba(20,0,0,1)","rgba(20,0,0,1)","rgba(20,0,0,1)","rgba(20,0,0,1)"];
+//////////////////
+
 
 canvas.style.position = "absolute";
 canvas.style.left = (windowWidth - canvas.width)/2;
@@ -50,8 +61,27 @@ function entityPar() {
 	this.c = "rgba(0,0,0,1)";
 }
 
+function polygonPar() {
+	this.x = windowCX;
+	this.y = windowCY;
+	this.r = 20 * entity.r;
+	this.c = "rgba(0,0,0,1)";
+	this.s = 6;  //sides
+	this.w = entity.r * 5;  //width
+	this.a = Math.random() * 360;  //angle
+	this.mbar = Math.random() * 6 + 1;  //missing bar < s
+}
+
 function entitySpawn() {
 	entity = new entityPar();
+}
+
+function polygonSpawn() {
+	polygons.push(new polygonSpawn());
+}
+
+function polygonDestruct() {
+	polygons.shift();
 }
 
 function entityRender() {
@@ -62,13 +92,36 @@ function entityRender() {
 	ctx.closePath();
 }
 
-function gameplay() {
-	entityRender();
+function polygonRender() {
+	for(var i=0;i<polygons.length;i++) {
+		ctx.beginPath();
+
+		ctx.closePath();
+	}
+}
+
+function backgroundGen() {
+	for(var i=0;i<polySide;i++) {
+		ctx.beginPath();
+		ctx.moveTo(windowCX,windowCY);
+		ctx.lineTo(windowCX+backRad*Math.cos(i*360/polySide*Math.PI/180),windowCY+backRad*Math.sin(i*360/polySide*Math.PI/180));
+		i++;
+		ctx.lineTo(windowCX+backRad*Math.cos(i*360/polySide*Math.PI/180),windowCY+backRad*Math.sin(i*360/polySide*Math.PI/180));
+		ctx.lineTo(windowCX,windowCY);
+		i--;
+		ctx.fillStyle = colors[i];
+		ctx.fill();
+		ctx.closePath();
+	}
+}
+
+function gameframe() {
+	backgroundGen();
 
 }
 
 entitySpawn();
-gameplay();
+gameframe();
 
 </script>
 
