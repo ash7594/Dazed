@@ -11,13 +11,11 @@
 }
 
 body{
-	background-color: black;
+	background-color: #000000;
 }
 
 #canvas{
-	background-color: white;
 	border-radius: 10px;
-	border: 2px solid #333333;
 }
 
 </style>
@@ -33,8 +31,8 @@ var ctx = canvas.getContext("2d");
 
 var windowWidth = window.innerWidth;
 var windowHeight = window.innerHeight;
-canvas.width = windowWidth * 0.9;
-canvas.height = windowHeight * 0.9;
+canvas.width = windowWidth * 0.99;
+canvas.height = windowHeight * 0.99;
 var windowCX = canvas.width/2;
 var windowCY = canvas.height/2;
 var windowA = 0;
@@ -44,7 +42,7 @@ var entity;
 var polygons = [];
 var polySide = 6;
 //////////////////
-var backRad = 100;
+var backRad = (windowWidth > windowHeight)?windowWidth/2+canvas.width/20:windowHeight/2+canvas.height/20;
 var colors = ["red","blue","yellow","green","grey","purple"];
 var colors2 = ["rgba(40,0,0,1)","rgba(80,0,0,1)","rgba(120,0,0,1)","rgba(160,0,0,1)","rgba(200,0,0,1)","rgba(240,0,0,1)"];
 var colors3 = ["#FFFFFF","#FFCCFF","#FF99FF","#FF66FF","#FF33FF","#FF00FF"];
@@ -54,8 +52,9 @@ var colorShift2 = 0;
 var colorShift1 = 0;
 var colorShift3 = false;
 var colorShift4 = false;
+var colorChangeControlFlag = 0;
+var colorChangeMax = 4;
 //////////////////
-
 
 canvas.style.position = "absolute";
 canvas.style.left = (windowWidth - canvas.width)/2;
@@ -111,9 +110,9 @@ function backgroundGen() {
 	for(var i=0;i<polySide;i++) {
 		ctx.beginPath();
 		ctx.moveTo(windowCX,windowCY);
-		ctx.lineTo(windowCX+backRad*Math.cos(i*360/polySide*Math.PI/180),windowCY+backRad*Math.sin(i*360/polySide*Math.PI/180));
+		ctx.lineTo(windowCX+backRad*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad*Math.sin((windowA+i*360/polySide)*Math.PI/180));
 		i++;
-		ctx.lineTo(windowCX+backRad*Math.cos(i*360/polySide*Math.PI/180),windowCY+backRad*Math.sin(i*360/polySide*Math.PI/180));
+		ctx.lineTo(windowCX+backRad*Math.cos((windowA+i*360/polySide)*Math.PI/180),windowCY+backRad*Math.sin((windowA+i*360/polySide)*Math.PI/180));
 		ctx.lineTo(windowCX,windowCY);
 		i--;
 		if(colorShift4 == false) {
@@ -130,6 +129,10 @@ function backgroundGen() {
 		ctx.fill();
 		ctx.closePath();
 	}
+	colorChangeControlFlag++;
+	if(colorChangeControlFlag == colorChangeMax) {
+	/////////////////////
+	colorChangeControlFlag = 0;
 	colorShift2++;
 		if(colorShift2 == colorCode2.length) {
 			colorShift2 = 0;
@@ -140,13 +143,17 @@ function backgroundGen() {
 			}
 			colorShift3 = !colorShift3;
 		}
+	/////////////////////
+	}
 }
 
 function gameframe() {
+	//ctx.clearRect(0,0,canvas.width,canvas.height);
 	backgroundGen();
+	windowA += 0.1;
 }
 
-setInterval(gameframe,100);
+setInterval(gameframe,17);
 
 entitySpawn();
 gameframe();
