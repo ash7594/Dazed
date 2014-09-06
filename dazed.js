@@ -184,8 +184,8 @@ function gameframe() {
 		polygonWaitCount = 0;
 		polygonSpawn();
 	}
-	windowA += 2;
-	entity.a += 2;
+	windowA += 0.5;
+	entity.a += 0.5;
 	entityUpdate();
 	backgroundGen();
 	polygonRender();

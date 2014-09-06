@@ -4,6 +4,7 @@
   "description": "dazed",
   "launch_path": "/index.html",
   "fullscreen": "true",
+  "orientation": "landscape-primary",
   "icons": {
     "128": "/images/icon_128.jpg",
     "32": "/images/icon_32.jpg",
