@@ -53,6 +53,7 @@ var colorCode2 = ["FF","EE","DD","CC","BB","AA","99","88","77","66","55","44","3
 var colorShift2 = 0;
 var colorShift1 = 0;
 var colorShift3 = false;
+var colorShift4 = false;
 //////////////////
 
 
@@ -115,10 +116,17 @@ function backgroundGen() {
 		ctx.lineTo(windowCX+backRad*Math.cos(i*360/polySide*Math.PI/180),windowCY+backRad*Math.sin(i*360/polySide*Math.PI/180));
 		ctx.lineTo(windowCX,windowCY);
 		i--;
-		if(colorShift3 == false)
-			ctx.fillStyle = "#"+colorCode[colorShift1]+colorCode[i]+colorCode2[colorShift2];
-		else if(colorShift3 == true)
-			ctx.fillStyle = "#"+colorCode[colorShift1]+colorCode[i]+colorCode2[colorCode2.length-1-colorShift2];
+		if(colorShift4 == false) {
+			if(colorShift3 == false)
+				ctx.fillStyle = "#"+colorCode2[colorShift1]+colorCode[i]+colorCode2[colorShift2];
+			else if(colorShift3 == true)
+				ctx.fillStyle = "#"+colorCode2[colorShift1]+colorCode[i]+colorCode2[colorCode2.length-1-colorShift2];
+		} else if(colorShift4 == true) {
+			if(colorShift3 == false)
+				ctx.fillStyle = "#"+colorCode2[colorCode2.length-1-colorShift1]+colorCode[i]+colorCode2[colorShift2];
+			else if(colorShift3 == true)
+				ctx.fillStyle = "#"+colorCode2[colorCode2.length-1-colorShift1]+colorCode[i]+colorCode2[colorCode2.length-1-colorShift2];
+		} 
 		ctx.fill();
 		ctx.closePath();
 	}
@@ -126,8 +134,9 @@ function backgroundGen() {
 		if(colorShift2 == colorCode2.length) {
 			colorShift2 = 0;
 			colorShift1++;
-			if(colorShift1 == 6) {
+			if(colorShift1 == colorCode2.length) {
 				colorShift1 = 0;
+				colorShift4 = !colorShift4;
 			}
 			colorShift3 = !colorShift3;
 		}
