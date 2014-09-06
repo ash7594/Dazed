@@ -13,7 +13,7 @@ var entity;
 //////////////////
 var polygons = [];
 var polySide = 5;
-var polygonWait = 50;
+var polygonWait = 100;
 var polygonWaitCount = 0;
 var lineWidthJumpWait = 50;
 var lineWidthJumpCount = 0;
@@ -42,6 +42,7 @@ canvas.style.top = (windowHeight - canvas.height)/2;
 
 window.addEventListener("keydown",keyPress);
 window.addEventListener("keyup",keyRelease);
+window.addEventListener("click",firefoxOScontrol);
 
 function keyPress(e) {
 	pressedKey = e.keyCode;
@@ -50,6 +51,13 @@ function keyPress(e) {
 
 function keyRelease(e) {
 	pressedKey = -1;
+}
+
+function firefoxOScontrol(e) {
+	if(e.clientX<(windowWidth/2))
+		pressedKey = 37;
+	else
+		pressedKey = 39;
 }
 
 function entityPar() {
