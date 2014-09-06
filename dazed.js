@@ -12,7 +12,7 @@ var windowA = 0;
 var entity;
 //////////////////
 var polygons = [];
-var polySide = 10000;
+var polySide = 5;
 var polygonWait = 100;
 var polygonWaitCount = 0;
 var lineWidthJumpWait = 50;
@@ -33,15 +33,30 @@ var colorShift4 = false;
 var colorChangeControlFlag = 0;
 var colorChangeMax = 4;
 //////////////////
+var pressedKey = -1;
+//////////////////
 
 canvas.style.position = "absolute";
 canvas.style.left = (windowWidth - canvas.width)/2;
 canvas.style.top = (windowHeight - canvas.height)/2;
 
+window.addEventListener("keydown",keyPress);
+window.addEventListener("keyup",keyRelease);
+
+function keyPress(e) {
+	pressedKey = e.keyCode;
+	console.log(pressedKey);
+}
+
+function keyRelease(e) {
+	pressedKey = -1;
+}
+
 function entityPar() {
-	this.x = 100;
-	this.y = 100;
-	this.r = (windowWidth < windowHeight)?windowWidth*0.005:windowHeight*0.005;
+	this.a = windowA + (360/polySide)/2; 
+	this.x = windowCX + ((canvas.width<canvas.height)?canvas.width/5:canvas.height/5)*Math.cos(this.a*Math.PI/180);
+	this.y = windowCY + ((canvas.width<canvas.height)?canvas.width/5:canvas.height/5)*Math.sin(this.a*Math.PI/180);
+	this.r = (windowWidth < windowHeight)?windowWidth*0.01:windowHeight*0.01;
 	this.c = "rgba(0,0,0,1)";
 }
 
@@ -103,6 +118,19 @@ function polygonRender() {
 	}*/
 }
 
+function entityUpdate() {
+	if(pressedKey == 37) {
+		entity.a -= 360/polySide;
+		pressedKey = -1;
+	} else if(pressedKey == 39) {
+		entity.a += 360/polySide;
+		pressedKey = -1;
+	}
+
+	entity.x = windowCX + ((canvas.width<canvas.height)?canvas.width/5:canvas.height/5)*Math.cos(entity.a*Math.PI/180);
+	entity.y = windowCY + ((canvas.width<canvas.height)?canvas.width/5:canvas.height/5)*Math.sin(entity.a*Math.PI/180);
+}
+
 function backgroundGen() {
 	for(var i=0;i<polySide;i++) {
 		ctx.beginPath();
@@ -157,8 +185,11 @@ function gameframe() {
 		polygonSpawn();
 	}
 	windowA += 1;
+	entity.a++;
+	entityUpdate();
 	backgroundGen();
 	polygonRender();
+	entityRender();
 }
 
 setInterval(gameframe,17);
