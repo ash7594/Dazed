@@ -34,12 +34,41 @@ var ctx = canvas.getContext("2d");
 var windowWidth = window.innerWidth;
 var windowHeight = window.innerHeight;
 
+var entity;
+
 canvas.width = windowWidth * 0.9;
 canvas.height = windowHeight * 0.9;
 
 canvas.style.position = "absolute";
 canvas.style.left = (windowWidth - canvas.width)/2;
 canvas.style.top = (windowHeight - canvas.height)/2;
+
+function entityPar() {
+	this.x = 100;
+	this.y = 100;
+	this.r = (windowWidth < windowHeight)?windowWidth*0.005:windowHeight*0.005;
+	this.c = "rgba(0,0,0,1)";
+}
+
+function entitySpawn() {
+	entity = new entityPar();
+}
+
+function entityRender() {
+	ctx.beginPath();
+	ctx.fillStyle = entity.c;
+	ctx.arc(entity.x,entity.y,entity.r,0,2*Math.PI);
+	ctx.fill();
+	ctx.closePath();
+}
+
+function gameplay() {
+	entityRender();
+
+}
+
+entitySpawn();
+gameplay();
 
 </script>
 
