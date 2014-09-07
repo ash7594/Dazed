@@ -10,9 +10,12 @@ var windowCY = canvas.height/2;
 var windowA = 0;
 //////////////////
 var entity;
+var entityBar = 0;
+var level = 0;
+var entityRad = ((canvas.width<canvas.height)?canvas.width/3:canvas.height/3);
 //////////////////
 var polygons = [];
-var polySide = 5;
+var polySide = 6;
 var polygonWait = 100;
 var polygonWaitCount = 0;
 var lineWidthJumpWait = 50;
@@ -130,13 +133,29 @@ function entityUpdate() {
 	if(pressedKey == 37) {
 		entity.a -= 360/polySide;
 		pressedKey = -1;
+		entityBar--;
+		if(entityBar<0)
+			entityBar = polySide-1;
 	} else if(pressedKey == 39) {
 		entity.a += 360/polySide;
 		pressedKey = -1;
+		entityBar++;
+		if(entityBar>=polySide)
+			entityBar = 0;
 	}
 
 	entity.x = windowCX + ((canvas.width<canvas.height)?canvas.width/3:canvas.height/3)*Math.cos(entity.a*Math.PI/180);
 	entity.y = windowCY + ((canvas.width<canvas.height)?canvas.width/3:canvas.height/3)*Math.sin(entity.a*Math.PI/180);
+}
+
+function entityCollisionCheck() {
+	if(entityBar != polygons[level].mbar && polygons[level].r >= (entityRad-5) && polygons[level].r <= (entityRad+5)) {
+		alert("yo");
+	}
+	if(polygons[level].r > (entityRad+5)) {
+		level++;
+	}
+
 }
 
 function backgroundGen() {
@@ -195,6 +214,8 @@ function gameframe() {
 	windowA += 0.5;
 	entity.a += 0.5;
 	entityUpdate();
+	if(level<polygons.length)
+		entityCollisionCheck();
 	backgroundGen();
 	polygonRender();
 	entityRender();
