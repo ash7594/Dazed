@@ -37,6 +37,7 @@ var colorChangeControlFlag = 0;
 var colorChangeMax = 4;
 //////////////////
 var pressedKey = -1;
+var gameInterval;
 //////////////////
 
 canvas.style.position = "absolute";
@@ -91,6 +92,7 @@ function polygonSpawn() {
 
 function polygonDestruct() {
 	polygons.shift();
+	level--;
 }
 
 function entityRender() {
@@ -149,13 +151,12 @@ function entityUpdate() {
 }
 
 function entityCollisionCheck() {
-	if(entityBar != polygons[level].mbar && polygons[level].r >= (entityRad-5) && polygons[level].r <= (entityRad+5)) {
-		alert("yo");
+	if(entityBar != polygons[level].mbar && (polygons[level].r*Math.cos(360/polySide/2 * Math.PI / 180)) >= (entityRad-5) && (polygons[level].r*Math.cos(360/polySide/2 * Math.PI / 180)) <= (entityRad+5)) {
+		clearInterval(gameInterval);
 	}
-	if(polygons[level].r > (entityRad+5)) {
+	if((polygons[level].r*Math.cos(360/polySide/2 * Math.PI / 180)) > (entityRad+5)) {
 		level++;
 	}
-
 }
 
 function backgroundGen() {
@@ -221,7 +222,7 @@ function gameframe() {
 	entityRender();
 }
 
-setInterval(gameframe,17);
+gameInterval = setInterval(gameframe,17);
 
 entitySpawn();
 polygonSpawn();
